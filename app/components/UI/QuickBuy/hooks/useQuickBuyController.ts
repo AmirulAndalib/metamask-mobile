@@ -1730,6 +1730,31 @@ export function useQuickBuyController(
       return hasNonZeroInputAmount;
     }
   }, [sourceTokenAmount, sourceToken?.decimals]);
+
+  useEffect(() => {
+    const updateQuoteParams = maybeSwapQuotes?.debouncedUpdateQuoteParams;
+    if (!updateQuoteParams) {
+      return;
+    }
+    if (
+      sourceToken &&
+      destToken &&
+      hasQuoteRequestableAmount &&
+      !isPresetAddFundsMode
+    ) {
+      updateQuoteParams();
+    }
+    return () => {
+      updateQuoteParams.cancel();
+    };
+  }, [
+    destToken,
+    hasQuoteRequestableAmount,
+    isPresetAddFundsMode,
+    maybeSwapQuotes?.debouncedUpdateQuoteParams,
+    sourceToken,
+    sourceTokenAmount,
+  ]);
   // A displayed quote corresponds to the current amount when the amount the
   // user actually spends matches the requested amount. The request is built
   // with `calcTokenValue(sourceTokenAmount, decimals).toFixed(0)`, so we
