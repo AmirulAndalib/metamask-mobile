@@ -17,6 +17,7 @@ import { useLatestBalance } from '../../hooks/useLatestBalance';
 import type { buildGenericQuoteRequest } from '../SwapQuotesProvider/utils';
 import { selectSourceWalletAddress } from '../../../../../selectors/bridge';
 import { SwapsFeatureIdProvider } from '../SwapsFeatureIdProvider';
+import type { FeatureId } from '@metamask/bridge-controller';
 
 export const BridgeSessionContext = createContext<{
   selectedTab: BridgeTabKey;
@@ -33,8 +34,10 @@ export const BridgeSessionContext = createContext<{
  */
 export const BridgeSessionProvider = ({
   children,
+  featureId,
 }: {
   children: React.ReactNode;
+  featureId?: FeatureId;
 }) => {
   // `selectedTab` drives the tabs bar and updates urgently so a press is
   // acknowledged on the same frame. `renderedTab` swaps the content, which is
@@ -42,7 +45,7 @@ export const BridgeSessionProvider = ({
   // of holding up that feedback.
   const [selectedTab, setSelectedTab] = useState(BridgeTabKey.Market);
   const [renderedTab, setRenderedTab] = useState(BridgeTabKey.Market);
-  const featureId = TAB_TO_FEATURE_ID[renderedTab];
+  const featureIdToUse = featureId ?? TAB_TO_FEATURE_ID[renderedTab];
 
   const sourceToken = useSelector(selectSourceToken);
   const balanceRefreshKey = useSelector(selectBridgeBalanceRefreshKey);
@@ -54,7 +57,7 @@ export const BridgeSessionProvider = ({
       balance: sourceToken?.balance,
       refreshKey: balanceRefreshKey,
     },
-    featureId,
+    featureIdToUse,
   );
 
   const destToken = useSelector(selectDestToken);
@@ -95,7 +98,7 @@ export const BridgeSessionProvider = ({
 
   return (
     <BridgeSessionContext.Provider value={value}>
-      <SwapsFeatureIdProvider featureId={featureId}>
+      <SwapsFeatureIdProvider featureId={featureIdToUse}>
         {children}
       </SwapsFeatureIdProvider>
     </BridgeSessionContext.Provider>
