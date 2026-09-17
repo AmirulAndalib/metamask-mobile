@@ -26,7 +26,7 @@ export const DEBOUNCE_WAIT = 300;
  */
 export const MIGRATED_FEATURE_IDS: FeatureId[] = [
   FeatureId.LIMIT_ORDER,
-  FeatureId.QUICK_BUY_EXPLORE,
-  FeatureId.QUICK_BUY_FOLLOW_TRADING,
-  FeatureId.QUICK_BUY_TOKEN_DETAILS,
+  // FeatureId.QUICK_BUY_EXPLORE,
+  // FeatureId.QUICK_BUY_FOLLOW_TRADING,
+  // FeatureId.QUICK_BUY_TOKEN_DETAILS,
 ];

@@ -115,6 +115,7 @@ import { resolveQuickBuyTerminalToast } from '../resolveQuickBuyTerminalToast';
 import { resolveLiveTokenBalance } from './liveSelectedTokenBalance';
 import { BRIDGE_QUOTE_RESPONSE_MIGRATION_PHASE } from '../../../../constants/bridge';
 import { useSwapQuotes } from '../../Bridge/hooks/useSwapQuotes';
+import { useBridgeSession } from '../../Bridge/hooks/useBridgeSession';
 
 export type QuickBuyButtonError =
   | 'insufficient_balance'
@@ -797,7 +798,6 @@ export function useQuickBuyController(
     : sourceTokenAmount;
 
   const maybeSwapQuotes = useSwapQuotes();
-
   const quickBuyQuotes = useQuickBuyQuotes({
     sourceToken,
     destToken,
@@ -1375,6 +1375,7 @@ export function useQuickBuyController(
 
   const handleAmountChange = useCallback(
     (text: string) => {
+      console.log('====handleAmountChange', text);
       lastInputMethodRef.current =
         QuickBuyEventValues.AMOUNT_SELECTION_METHOD.CUSTOM_INPUT;
       const cleaned = dotAndCommaDecimalFormatter(text).replace(/[^0-9.]/g, '');
@@ -1727,30 +1728,6 @@ export function useQuickBuyController(
     }
   }, [sourceTokenAmount, sourceToken?.decimals]);
 
-  useEffect(() => {
-    const updateQuoteParams = maybeSwapQuotes?.debouncedUpdateQuoteParams;
-    if (!updateQuoteParams) {
-      return;
-    }
-    if (
-      sourceToken &&
-      destToken &&
-      hasQuoteRequestableAmount &&
-      !isPresetAddFundsMode
-    ) {
-      updateQuoteParams();
-    }
-    return () => {
-      updateQuoteParams.cancel();
-    };
-  }, [
-    destToken,
-    hasQuoteRequestableAmount,
-    isPresetAddFundsMode,
-    maybeSwapQuotes?.debouncedUpdateQuoteParams,
-    sourceToken,
-    sourceTokenAmount,
-  ]);
   // A displayed quote corresponds to the current amount when the amount the
   // user actually spends matches the requested amount. The request is built
   // with `calcTokenValue(sourceTokenAmount, decimals).toFixed(0)`, so we

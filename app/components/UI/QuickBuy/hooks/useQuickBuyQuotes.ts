@@ -56,6 +56,8 @@ import {
 } from '../utils/streamQuickBuyQuotes';
 import { parseCaipAssetType } from '@metamask/utils';
 import { BRIDGE_QUOTE_RESPONSE_MIGRATION_PHASE } from '../../../../constants/bridge';
+import { useBridgeSession } from '../../Bridge/hooks/useBridgeSession';
+import { useSwapQuotes } from '../../Bridge/hooks/useSwapQuotes';
 
 export type QuickBuyQuote = QuoteResponse;
 
@@ -210,6 +212,10 @@ const selectQuoteMetadataDeps = createSelector(
   }),
 );
 
+// TODO skip useEffects if swapQuotes
+/**
+ * @deprecated Use useSwapQuotes instead
+ */
 export function useQuickBuyQuotes({
   sourceToken,
   destToken,
@@ -293,6 +299,7 @@ export function useQuickBuyQuotes({
   // for. Null until the first fetch settles (or after quotes are reset).
   const settledRequestParamsKeyRef = useRef<string | null>(null);
 
+  // TODO skip expensive operations
   const resetQuotesIdle = useCallback(() => {
     setRawQuotes([]);
     setIsQuoteLoading(false);
@@ -304,6 +311,40 @@ export function useQuickBuyQuotes({
     setRefreshCount(0);
     settledRequestParamsKeyRef.current = null;
   }, []);
+
+  const maybeSwapQuotes = useSwapQuotes();
+  const { setQuoteParams } = useBridgeSession();
+  const quoteParams = useMemo(
+    () => ({
+      sourceToken,
+      destToken,
+      sourceTokenAmount,
+      slippage,
+      walletAddress,
+      destAddress: destAddress,
+      gasIncluded,
+      gasIncluded7702,
+    }),
+    [
+      sourceToken,
+      destToken,
+      sourceTokenAmount,
+      slippage,
+      walletAddress,
+      destAddress,
+      gasIncluded,
+      gasIncluded7702,
+    ],
+  );
+
+  // If migrated, set swap quoteParams to trigger quote polling
+  useEffect(() => {
+    if (maybeSwapQuotes) {
+      console.log('====useEffect setQuoteParams', quoteParams);
+      // TODO include analytics/trace params
+      setQuoteParams(quoteParams);
+    }
+  }, [maybeSwapQuotes, quoteParams, setQuoteParams]);
 
   const fetchQuotes = useCallback(async () => {
     abortControllerRef.current?.abort();

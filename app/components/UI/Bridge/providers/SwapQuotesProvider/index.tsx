@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useMemo } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { BigNumber as EthersBigNumber } from 'ethers';
 
@@ -7,7 +7,10 @@ import { useValidQuotes } from '../../hooks/useValidQuotes';
 import { useBlockaidError } from '../../hooks/useBlockaidError';
 import { useFormattedQuoteData } from '../../hooks/useFormattedQuoteData';
 
-import { type GenericQuoteRequest } from '@metamask/bridge-controller';
+import {
+  FeatureId,
+  type GenericQuoteRequest,
+} from '@metamask/bridge-controller';
 import {
   useUpdateQuoteParams,
   type UseDebouncedUpdateParams,
@@ -130,10 +133,17 @@ const useQuoteRequest = (params: UseQuoteRequestParams) => {
     debouncedUpdateQuoteParams({ isRefresh: true });
   }, [debouncedUpdateQuoteParams]);
 
+  useEffect(() => {
+    debouncedUpdateQuoteParams();
+
+    return () => {
+      debouncedUpdateQuoteParams.cancel();
+    };
+  }, [debouncedUpdateQuoteParams]);
+
   return useMemo(
     () => ({
       refreshQuotes,
-      debouncedUpdateQuoteParams,
     }),
     [refreshQuotes, debouncedUpdateQuoteParams],
   );

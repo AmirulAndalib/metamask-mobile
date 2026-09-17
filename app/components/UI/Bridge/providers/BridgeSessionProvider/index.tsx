@@ -1,21 +1,13 @@
 import React, { createContext, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  selectBridgeBalanceRefreshKey,
-  selectDestAddress,
-  selectDestToken,
-  selectSlippage,
-  selectSourceAmount,
-  selectSourceToken,
-} from '../../../../../core/redux/slices/bridge';
+import { selectBridgeBalanceRefreshKey } from '../../../../../core/redux/slices/bridge';
 import {
   BridgeTabKey,
   TAB_TO_FEATURE_ID,
 } from '../../Views/BridgeView/BridgeView.constants';
 import { useLatestBalance } from '../../hooks/useLatestBalance';
 import type { buildGenericQuoteRequest } from '../SwapQuotesProvider/utils';
-import { selectSourceWalletAddress } from '../../../../../selectors/bridge';
 import { SwapsFeatureIdProvider } from '../SwapsFeatureIdProvider';
 import type { FeatureId } from '@metamask/bridge-controller';
 
@@ -26,6 +18,9 @@ export const BridgeSessionContext = createContext<{
   setRenderedTab: (tab: BridgeTabKey) => void;
   latestSourceBalance: ReturnType<typeof useLatestBalance>;
   quoteParams: Parameters<typeof buildGenericQuoteRequest>[0]['quoteParams'];
+  setQuoteParams: (
+    quoteParams: Parameters<typeof buildGenericQuoteRequest>[0]['quoteParams'],
+  ) => void;
 } | null>(null);
 
 /**
@@ -47,41 +42,21 @@ export const BridgeSessionProvider = ({
   const [renderedTab, setRenderedTab] = useState(BridgeTabKey.Market);
   const featureIdToUse = featureId ?? TAB_TO_FEATURE_ID[renderedTab];
 
-  const sourceToken = useSelector(selectSourceToken);
   const balanceRefreshKey = useSelector(selectBridgeBalanceRefreshKey);
+
+  const [quoteParams, setQuoteParams] = useState<
+    Parameters<typeof buildGenericQuoteRequest>[0]['quoteParams']
+  >({});
+
   const latestSourceBalance = useLatestBalance(
     {
-      address: sourceToken?.address,
-      decimals: sourceToken?.decimals,
-      chainId: sourceToken?.chainId,
-      balance: sourceToken?.balance,
+      address: quoteParams.srcToken?.address,
+      decimals: quoteParams.srcToken?.decimals,
+      chainId: quoteParams.srcToken?.chainId,
+      balance: quoteParams.srcToken?.balance,
       refreshKey: balanceRefreshKey,
     },
     featureIdToUse,
-  );
-
-  const destToken = useSelector(selectDestToken);
-  const sourceAmount = useSelector(selectSourceAmount);
-  const slippage = useSelector(selectSlippage);
-  const walletAddress = useSelector(selectSourceWalletAddress);
-  const destAddress = useSelector(selectDestAddress);
-  const quoteParams = useMemo(
-    (): Parameters<typeof buildGenericQuoteRequest>[0]['quoteParams'] => ({
-      srcToken: sourceToken,
-      destToken,
-      srcAmount: sourceAmount,
-      slippage,
-      walletAddress,
-      destWalletAddress: destAddress,
-    }),
-    [
-      sourceToken,
-      destToken,
-      sourceAmount,
-      slippage,
-      walletAddress,
-      destAddress,
-    ],
   );
 
   const value = useMemo(
@@ -92,6 +67,7 @@ export const BridgeSessionProvider = ({
       setRenderedTab,
       latestSourceBalance,
       quoteParams,
+      setQuoteParams,
     }),
     [selectedTab, renderedTab, latestSourceBalance, quoteParams],
   );

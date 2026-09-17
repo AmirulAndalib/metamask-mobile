@@ -84,6 +84,7 @@ export const SwapsMarketOrderConfirmButton = ({
   const { isStockMarketClosed } = useStockMarketHours();
 
   const { latestSourceBalance } = useBridgeSession();
+
   const updateQuoteParams = useBridgeQuoteRequest({
     latestSourceAtomicBalance: latestSourceBalance?.atomicBalance,
   });
