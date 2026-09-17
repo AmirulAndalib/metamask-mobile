@@ -208,9 +208,7 @@ export interface UseQuickBuyControllerResult {
   >;
   handleSelectQuote: (requestId: string) => void;
   quotesLastFetchedAt: number | null;
-  refreshCount: number;
   quoteRefreshRateMs: number;
-  maxRefreshCount: number;
   refetchQuotes: () => void;
   // warnings (banner-level; can stack)
   isHardwareSolanaBlocked: boolean;
@@ -822,11 +820,10 @@ export function useQuickBuyController(
         ),
         isQuoteRequestStale: Boolean(maybeSwapQuotes.needsNewQuote),
         quoteCount: maybeSwapQuotes.validQuotes?.length ?? 0,
-        quotesLastFetchedAt: null,
-        refreshCount: 0,
-        quoteRefreshRateMs: 30000,
-        maxRefreshCount: 5,
+        quotesLastFetchedAt: maybeSwapQuotes.quotesLastFetched,
+        quoteRefreshRateMs: maybeSwapQuotes.refreshRate,
         refetchQuotes: maybeSwapQuotes.refreshQuotes,
+        // willRefresh: maybeSwapQuotes.willRefresh,
       }
     : quickBuyQuotes;
 
@@ -840,11 +837,10 @@ export function useQuickBuyController(
     isActiveQuoteForCurrentTokenPair,
     isQuoteRequestStale,
     quotesLastFetchedAt,
-    refreshCount,
     quoteRefreshRateMs,
-    maxRefreshCount,
     refetchQuotes,
   } = quotesToUse;
+
   // Reset manual quote selection whenever the user changes amount, token, or slippage.
   useEffect(() => {
     setSelectedQuoteRequestId(undefined);
@@ -1950,9 +1946,7 @@ export function useQuickBuyController(
     setSelectedQuoteRequestId,
     handleSelectQuote,
     quotesLastFetchedAt,
-    refreshCount,
     quoteRefreshRateMs,
-    maxRefreshCount,
     refetchQuotes,
     isHardwareSolanaBlocked,
     priceImpactViewData,
