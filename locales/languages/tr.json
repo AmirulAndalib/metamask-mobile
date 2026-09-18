@@ -66,6 +66,10 @@
       "title": "Yanlış ücret",
       "message": "Doğru ücreti sağlayamıyoruz ve bu tahmin yüksek olabilir. Özel bir gaz limiti girmenizi öneririz ancak işlemin yine de başarısız olma riski vardır."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "Para yetersiz",
       "message": "Hesabınızda ağ ücretlerini ödemek için yeterli {{nativeCurrency}} yok.",
@@ -1195,6 +1199,11 @@
       "all": "Tümü",
       "trade": "İşlem Yap",
       "just_now": "Az önce",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "açıldı",
         "perps_added": "eklendi",
@@ -1297,7 +1306,7 @@
           "robinhood": "Robinhood",
           "bnb": "BNB",
           "solana": "Solana",
-          "base": "Baz"
+          "base": "Base"
         },
         "range": {
           "market_cap_min": "$0",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "Tümü",
         "crypto": "Kripto",
+        "memecoin": "Memecoins",
         "pre_ipo": "Halka Arz Öncesi",
         "forex": "Forex",
         "new": "Yeni",
@@ -4472,7 +4482,7 @@
     "state_logs": "Durum günlükleri",
     "add_network_title": "Ağ ekle",
     "auto_lock": "Otomatik kilitle",
-    "enable_device_authentication": "Cihaz Doğrulamayı Etkinleştir",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "MetaMask'in kilidini açmak için cihazınızın biyometrik verilerini veya parolasını kullanın.",
     "auto_lock_desc": "Uygulama otomatik olarak kilitlenmeden süre miktarını seçin.",
     "state_logs_desc": "Bu, MetaMask'ın, karşılaşabileceğiniz her sorunu çözmesine yardımcı olur. Lütfen hamburger simgesinden > Geri Bildirim Gönder kısmından MetaMask destek bölümüne gönderin veya varsa mevcut sorgunuza yanıt verin.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "Yalnızca sayılara izin verilir",
       "negative_values_not_allowed": "Negatif değerlere izin verilmez",
       "max_base_fee_must_be_greater_than_priority_fee": "Maks. baz ücret öncelik ücretinden büyük olmalıdır",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "Öncelik ücreti maks. baz ücretten küçük olmalıdır",
       "no_zero_value": "{{field}}, 0'dan büyük olmalıdır",
       "speed": "Hız",
@@ -6245,7 +6256,7 @@
       "remember_me": "Beni Hatırla",
       "face_id": "Face ID",
       "touch_id": "Touch ID",
-      "device_authentication": "Cihaz Kimlik Doğrulaması",
+      "device_authentication": "Device authentication",
       "device_passcode": "Cihaz Parolası"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "Satın alma işlemlerinde Base ağındaki USDC varlıklarınızı kullanabilmesi için MetaMask Card'ı onaylayın.",
         "helper_text": "Bu işlem genellikle birkaç saniye sürer. Uygulamayı kapatmayın.",
         "confirm_button": "Fonlamayı onayla",
-        "retry_button": "Tekrar dene"
+        "retry_button": "Tekrar dene",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "Kimliğiniz doğrulanıyor",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "Doğrulama işlemi devam ediyor",
           "description": "Kimlik doğrulama işleminiz inceleniyor. Bu işlem genellikle 12 saatten kısa sürer."
-        },
-        "pending_verification": {
-          "title": "Kart kurulumunuzu tamamlayın",
-          "description": "Kartınızın etkinleştirilebilmesi için tamamlamanız gereken bekleyen doğrulama adımları var.",
-          "confirm_button_label": "Doğrulama işlemine devam et"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "Tam erişim açık",
         "unlink_money_account": "Money account hesabının bağlantısını kes",
         "unlink_money_account_description": "Kart fonlama kaynağınızı değiştirin",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Travel",
         "travel_description": "%70'e varan indirimlerle otel rezervasyonu yapın",
         "card_tos_title": "Şart ve koşullar",
@@ -10211,8 +10224,51 @@
         "freeze_success": "Kart başarıyla donduruldu",
         "unfreeze_success": "Kart dondurma işlemi başarıyla iptal edildi",
         "change_asset": "Varlık değiştir",
-        "change_asset_description": "Farklı bir token seçin"
+        "change_asset_description": "Farklı bir token seçin",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "İşlemler",
@@ -10678,7 +10734,7 @@
       "bonus": "Bonus",
       "details": "Ayrıntılar",
       "points": "Puan",
-      "points_base": "Baz",
+      "points_base": "Temel",
       "points_boost": "Yükseltme",
       "points_total": "Toplam",
       "description": "Açıklama"

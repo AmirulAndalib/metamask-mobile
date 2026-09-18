@@ -66,6 +66,10 @@
       "title": "수수료가 정확하지 않음",
       "message": "정확한 수수료를 산정할 수 없어 견적이 높게 책정되었을 수 있습니다. 사용자 지정 가스 한도를 입력해 보세요. 하지만 그 경우에도 거래가 실패할 가능성이 있습니다."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "자금 부족",
       "message": "계정에 네트워크 수수료를 지불할 {{nativeCurrency}}(이)가 부족합니다.",
@@ -1195,6 +1199,11 @@
       "all": "모두",
       "trade": "거래하기",
       "just_now": "지금",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "진입",
         "perps_added": "추가함",
@@ -1297,7 +1306,7 @@
           "robinhood": "Robinhood",
           "bnb": "BNB",
           "solana": "솔라나",
-          "base": "기본"
+          "base": "Base"
         },
         "range": {
           "market_cap_min": "$0",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "모두",
         "crypto": "암호화폐",
+        "memecoin": "Memecoins",
         "pre_ipo": "상장 전",
         "forex": "외환",
         "new": "신규",
@@ -4472,7 +4482,7 @@
     "state_logs": "상태 로그",
     "add_network_title": "네트워크 추가",
     "auto_lock": "자동 잠금",
-    "enable_device_authentication": "장치 인증 활성화",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "장치의 바이오메트릭 또는 암호를 사용해 MetaMask를 잠금 해제하세요.",
     "auto_lock_desc": "앱이 자동으로 잠기기 전까지 걸리는 시간을 선택하세요.",
     "state_logs_desc": "이렇게 하면 MetaMask에서 발생할 수 있는 문제를 디버깅하는 데 도움이 됩니다. 햄버거 아이콘 > 피드백 보내기로 문의하시거나 또는 기존 문의 티켓이 있으면, 해당 티켓으로 회신하여 MetaMask 지원 서비스로 보내주시기 바랍니다.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "숫자만 허용됩니다",
       "negative_values_not_allowed": "음수 값은 허용되지 않습니다",
       "max_base_fee_must_be_greater_than_priority_fee": "최대 기본 요금은 우선 요금보다 높아야 합니다",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "우선 요금은 최대 기본 요금보다 낮아야 합니다",
       "no_zero_value": "{{field}}(은)는 0보다 커야 합니다",
       "speed": "속도",
@@ -6245,7 +6256,7 @@
       "remember_me": "로그인 유지",
       "face_id": "Face ID",
       "touch_id": "Touch ID",
-      "device_authentication": "기기 인증",
+      "device_authentication": "Device authentication",
       "device_passcode": "기기 비밀번호"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "구매 시 Base의 USDC를 사용하도록 MetaMask 카드를 승인하세요.",
         "helper_text": "보통 몇 초 정도 소요됩니다. 앱을 종료하지 마세요.",
         "confirm_button": "자금 승인",
-        "retry_button": "다시 시도"
+        "retry_button": "다시 시도",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "본인 인증 중",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "신원 인증 진행 중",
           "description": "신원 인증을 검토 중입니다. 일반적으로 12시간 이내에 완료됩니다."
-        },
-        "pending_verification": {
-          "title": "카드 설정 완료하기",
-          "description": "카드를 활성화하려면 대기 중인 인증 단계를 완료해야 합니다.",
-          "confirm_button_label": "인증 계속하기"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "제한 없이 사용할 수 있습니다",
         "unlink_money_account": "Money Account 연결 해제",
         "unlink_money_account_description": "카드 자금 출처를 변경하세요",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Travel",
         "travel_description": "최대 70% 할인된 가격으로 호텔을 예약하세요",
         "card_tos_title": "이용약관",
@@ -10211,8 +10224,51 @@
         "freeze_success": "카드가 성공적으로 정지되었습니다",
         "unfreeze_success": "카드가 성공적으로 정지 해제되었습니다",
         "change_asset": "자산 변경",
-        "change_asset_description": "다른 토큰 선택"
+        "change_asset_description": "다른 토큰 선택",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "트랜잭션",

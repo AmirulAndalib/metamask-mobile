@@ -66,6 +66,10 @@
       "title": "Ανακριβής χρέωση",
       "message": "Δεν μπορούμε να υπολογίσουμε με ακρίβεια τα τέλη και η εκτίμηση ενδέχεται να είναι υψηλότερη από την πραγματική. Συνιστούμε να ορίσετε ένα προσαρμοσμένο όριο τελών συναλλαγών, αλλά υπάρχει κίνδυνος η συναλλαγή να αποτύχει και πάλι."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "Ανεπαρκές ποσό",
       "message": "Δεν έχετε αρκετά {{nativeCurrency}} στον λογαριασμό σας για να πληρώσετε τα τέλη δικτύου.",
@@ -1195,6 +1199,11 @@
       "all": "Όλα",
       "trade": "Συναλλαγές",
       "just_now": "Μόλις τώρα",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "άνοιξε",
         "perps_added": "προστέθηκε",
@@ -1297,7 +1306,7 @@
           "robinhood": "Robinhood",
           "bnb": "BNB",
           "solana": "Solana",
-          "base": "Βάση"
+          "base": "Base"
         },
         "range": {
           "market_cap_min": "$0",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "Όλα",
         "crypto": "Κρύπτο",
+        "memecoin": "Memecoins",
         "pre_ipo": "Πριν την αρχική δημόσια προσφορά",
         "forex": "Forex",
         "new": "Νέα",
@@ -4472,7 +4482,7 @@
     "state_logs": "Αρχεία καταγραφής κατάστασης",
     "add_network_title": "Προσθήκη δικτύου",
     "auto_lock": "Αυτόματο κλείδωμα",
-    "enable_device_authentication": "Ενεργοποίηση ελέγχου ταυτότητας συσκευής",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "Χρησιμοποιήστε τα βιομετρικά δεδομένα ή τον κωδικό πρόσβασης της συσκευής σας για να ξεκλειδώσετε το MetaMask.",
     "auto_lock_desc": "Επιλέξτε το χρονικό διάστημα πριν κλειδώσει αυτόματα η εφαρμογή.",
     "state_logs_desc": "Αυτό θα βοηθήσει το MetaMask να εντοπίσει προβλήματα που ενδέχεται να αντιμετωπίσετε. Στείλτε τα στην υποστήριξη του MetaMask μέσω του εικονιδίου χάμπουργκερ > Αποστολή Σχολίων ή απαντήστε στο υπάρχον αίτημα υποστήριξης, αν έχετε.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "Επιτρέπονται μόνο αριθμοί",
       "negative_values_not_allowed": "Δεν επιτρέπονται αρνητικές τιμές",
       "max_base_fee_must_be_greater_than_priority_fee": "Η μέγιστη βασική χρέωση πρέπει να είναι μεγαλύτερη από τα τέλη προτεραιότητας",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "Τα τέλη προτεραιότητας πρέπει να είναι μικρότερα από τη μέγιστη βασική χρέωση",
       "no_zero_value": "Το πεδίο {{field}} πρέπει να είναι μεγαλύτερο από 0",
       "speed": "Ταχύτητα",
@@ -6245,7 +6256,7 @@
       "remember_me": "Να με θυμάσαι",
       "face_id": "Face ID",
       "touch_id": "Touch ID",
-      "device_authentication": "Έλεγχος ταυτότητας συσκευής",
+      "device_authentication": "Device authentication",
       "device_passcode": "Κωδικός πρόσβασης συσκευής"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "Εγκρίνετε τη χρήση της MetaMask Card ώστε να χρησιμοποιεί τα USDC στο Base για αγορές.",
         "helper_text": "Αυτό συνήθως διαρκεί λίγα δευτερόλεπτα. Μην κλείσετε την εφαρμογή.",
         "confirm_button": "Εγκρίνετε τη χρηματοδότηση",
-        "retry_button": "Προσπαθήστε ξανά"
+        "retry_button": "Προσπαθήστε ξανά",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "Επαλήθευση της ταυτότητάς σας",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "Επαλήθευση σε εξέλιξη",
           "description": "Η επαλήθευση ταυτότητάς σας βρίσκεται υπό εξέταση. Αυτό συνήθως διαρκεί λιγότερο από 12 ώρες."
-        },
-        "pending_verification": {
-          "title": "Ολοκληρώστε τη ρύθμιση της κάρτας σας",
-          "description": "Ολοκληρώστε τα εκκρεμή βήματα επαλήθευσης για να ενεργοποιήσετε την κάρτα σας.",
-          "confirm_button_label": "Συνεχίστε με την διαδικασία επαλήθευσης"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "Η πλήρης πρόσβαση είναι ενεργή",
         "unlink_money_account": "Αποσύνδεση του Money Account",
         "unlink_money_account_description": "Αλλάξτε την πηγή χρηματοδότησης της Κάρτας σας",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Travel",
         "travel_description": "Κάντε κράτηση σε ξενοδοχεία με έκπτωση έως και 70%",
         "card_tos_title": "Όροι και προϋποθέσεις",
@@ -10211,8 +10224,51 @@
         "freeze_success": "Η κάρτα πάγωσε επιτυχώς",
         "unfreeze_success": "Η κάρτα ξεπαγώθηκε με επιτυχία",
         "change_asset": "Αλλαγή περιουσιακού στοιχείου",
-        "change_asset_description": "Επιλέξτε διαφορετικό token"
+        "change_asset_description": "Επιλέξτε διαφορετικό token",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "Συναλλαγές",
@@ -10678,7 +10734,7 @@
       "bonus": "Μπόνους",
       "details": "Λεπτομέρειες",
       "points": "Πόντοι",
-      "points_base": "Βάση",
+      "points_base": "Βασικοί πόντοι",
       "points_boost": "Ενίσχυση",
       "points_total": "Σύνολο",
       "description": "Περιγραφή"

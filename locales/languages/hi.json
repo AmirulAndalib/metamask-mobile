@@ -66,6 +66,10 @@
       "title": "गलत फीस",
       "message": "हम सही फीस नहीं बता सकते और यह अंदाज़ा ज़्यादा हो सकता है। हमारा सुझाव है कि आप एक कस्टम गैस लिमिट डालें, हालांकि आपका ट्रांसेक्शन फेल भी हो सकता है।"
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "अपर्याप्त फंड",
       "message": "नेटवर्क शुल्क का भुगतान करने के लिए आपके अकाउंट में पर्याप्त {{nativeCurrency}} नहीं है।",
@@ -1195,6 +1199,11 @@
       "all": "सभी",
       "trade": "ट्रेड करें",
       "just_now": "अभी-अभी",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "खोला गया",
         "perps_added": "जोड़ा गया",
@@ -1297,7 +1306,7 @@
           "robinhood": "Robinhood",
           "bnb": "BNB",
           "solana": "Solana",
-          "base": "बेस"
+          "base": "Base"
         },
         "range": {
           "market_cap_min": "$0",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "सभी",
         "crypto": "क्रिप्टो",
+        "memecoin": "Memecoins",
         "pre_ipo": "Pre-IPO",
         "forex": "फॉरेक्स",
         "new": "नया",
@@ -4472,7 +4482,7 @@
     "state_logs": "स्टेट लॉग्स",
     "add_network_title": "एक नेटवर्क जोड़ें",
     "auto_lock": "ऑटो-लॉक",
-    "enable_device_authentication": "डिवाइस ऑथेंटिकेशन चालू करें",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "MetaMask को अनलॉक करने के लिए अपने डिवाइस के बायोमेट्रिक्स या पासकोड का इस्तेमाल करें।",
     "auto_lock_desc": "एप्लिकेशन के अपने आप लॉक होने में लगने वाले समय का चयन करें। ",
     "state_logs_desc": "किसी समस्या को डिबग करने में यह MetaMask की मदद करेगा, जिससे आपका मुकाबला हो सकता है।  कृपया इसे हैमबर्गर आइकन > फीडबेक भेजें के जरिए MetaMask समर्थन को भेजें, या अपने वर्तमान टिकट का जवाब दें यदि आपके पास एक है।",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "केवल नंबरों की अनुमति है",
       "negative_values_not_allowed": "नेगेटिव वैल्यूज़ की अनुमति नहीं है",
       "max_base_fee_must_be_greater_than_priority_fee": "अधिकतम बेस फी को प्रायोरिटी फी से ज़्यादा होना चाहिए",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "प्रायोरिटी फी को अधिकतम बेस फी से कम होना चाहिए",
       "no_zero_value": "{{field}} को 0 से ज़्यादा होना चाहिए",
       "speed": "स्पीड",
@@ -6245,7 +6256,7 @@
       "remember_me": "मुझे याद रखें",
       "face_id": "फेस ID",
       "touch_id": "टच ID",
-      "device_authentication": "डिवाइस प्रमाणीकरण",
+      "device_authentication": "Device authentication",
       "device_passcode": "डिवाइस पासकोड"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "खरीदारी के लिए अपने बेस पर मौजूद USDC का उपयोग करने हेतु MetaMask कार्ड को एप्रूव करें।",
         "helper_text": "इसमें आमतौर पर कुछ सेकंड लगते हैं। कृपया ऐप बंद न करें।",
         "confirm_button": "फंडिंग एप्रूव करें",
-        "retry_button": "फिर से प्रयास करें"
+        "retry_button": "फिर से प्रयास करें",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "आपकी पहचान वेरीफाई की जा रही है",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "वेरिफिकेशन प्रोग्रेस में है",
           "description": "आपकी पहचान सत्यापन की समीक्षा की जा रही है। यह आम तौर पर 12 घंटे से कम समय लेता है।"
-        },
-        "pending_verification": {
-          "title": "अपना कार्ड सेटअप पूरा करें",
-          "description": "आपके कार्ड को चालू करने से पहले कुछ सत्यापन चरण पूरे करना आवश्यक हैं, जो अभी पूरे नहीं हुए हैं।",
-          "confirm_button_label": "सत्यापन जारी रखें"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "फुल एक्सेस चालू है",
         "unlink_money_account": "Money Account को अनलिंक करें",
         "unlink_money_account_description": "अपना कार्ड फंडिंग सोर्स बदलें",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask ट्रैवल",
         "travel_description": "70% तक की छूट के साथ होटल बुक करें",
         "card_tos_title": "नियम और शर्त",
@@ -10211,8 +10224,51 @@
         "freeze_success": "कार्ड अच्छे से फ्रीज़ हो गया",
         "unfreeze_success": "कार्ड अच्छे से अनफ्रीज़ हो गया",
         "change_asset": "एसेट बदलें",
-        "change_asset_description": "कोई दूसरा टोकन चुनें"
+        "change_asset_description": "कोई दूसरा टोकन चुनें",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "ट्रांसेक्शन्स",

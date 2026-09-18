@@ -66,6 +66,10 @@
       "title": "Biaya tidak akurat",
       "message": "Kami tidak dapat memberikan biaya yang akurat dan estimasi ini mungkin terlalu tinggi. Sebaiknya, masukkan batas gas khusus, tetapi ada risiko transaksi tetap gagal."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "Dana tidak cukup",
       "message": "{{nativeCurrency}} di akun Anda tidak cukup untuk membayar biaya jaringan.",
@@ -1195,6 +1199,11 @@
       "all": "Semua",
       "trade": "Berdagang",
       "just_now": "Baru saja",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "dibuka",
         "perps_added": "ditambahkan",
@@ -1297,7 +1306,7 @@
           "robinhood": "Robinhood",
           "bnb": "BNB",
           "solana": "Solana",
-          "base": "Dasar"
+          "base": "Base"
         },
         "range": {
           "market_cap_min": "$0",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "Semua",
         "crypto": "Kripto",
+        "memecoin": "Memecoins",
         "pre_ipo": "Pra-IPO",
         "forex": "Forex",
         "new": "Baru",
@@ -4472,7 +4482,7 @@
     "state_logs": "Log state",
     "add_network_title": "Tambahkan jaringan",
     "auto_lock": "Kunci otomatis",
-    "enable_device_authentication": "Aktifkan Autentikasi Perangkat",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "Gunakan biometrik atau kode sandi perangkat Anda untuk membuka MetaMask.",
     "auto_lock_desc": "Pilih jumlah waktu sebelum aplikasi terkunci secara otomatis.",
     "state_logs_desc": "Ini akan membantu MetaMask memperbaiki masalah apa pun yang mungkin Anda temui. Kirimkan kepada dukungan MetaMask melalui ikon hamburger > Kirim Umpan Balik, atau balas tiket yang ada, jika ada.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "Hanya angka yang diizinkan",
       "negative_values_not_allowed": "Nilai negatif tidak diizinkan",
       "max_base_fee_must_be_greater_than_priority_fee": "Biaya dasar maks harus lebih besar dari biaya prioritas",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "Biaya prioritas harus kurang dari biaya dasar maks",
       "no_zero_value": "{{field}} harus lebih besar dari 0",
       "speed": "Kecepatan",
@@ -6245,7 +6256,7 @@
       "remember_me": "Ingat Saya",
       "face_id": "ID Wajah",
       "touch_id": "ID Sentuh",
-      "device_authentication": "Autentikasi Perangkat",
+      "device_authentication": "Device authentication",
       "device_passcode": "Kode Sandi Perangkat"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "Setujui Kartu MetaMask untuk menggunakan USDC Anda di Base untuk pembelian.",
         "helper_text": "Proses ini umumnya membutuhkan waktu beberapa detik. Jangan tutup aplikasi.",
         "confirm_button": "Setujui pendanaan",
-        "retry_button": "Coba lagi"
+        "retry_button": "Coba lagi",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "Memverifikasi identitas Anda",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "Verifikasi sedang berlangsung",
           "description": "Verifikasi identitas Anda sedang ditinjau. Proses ini umumnya memerlukan waktu kurang dari 12 jam."
-        },
-        "pending_verification": {
-          "title": "Selesaikan pengaturan kartu Anda",
-          "description": "Anda memiliki beberapa langkah verifikasi yang perlu diselesaikan sebelum kartu Anda dapat diaktifkan.",
-          "confirm_button_label": "Lanjutkan verifikasi"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "Akses penuh aktif",
         "unlink_money_account": "Putuskan tautan Money Account",
         "unlink_money_account_description": "Ubah sumber pendanaan Kartu Anda",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Travel",
         "travel_description": "Pesan hotel dengan diskon hingga 70%",
         "card_tos_title": "Syarat dan Ketentuan",
@@ -10211,8 +10224,51 @@
         "freeze_success": "Kartu berhasil diblokir",
         "unfreeze_success": "Blokir kartu berhasil dibuka",
         "change_asset": "Ubah aset",
-        "change_asset_description": "Pilih token yang berbeda"
+        "change_asset_description": "Pilih token yang berbeda",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "Transaksi",

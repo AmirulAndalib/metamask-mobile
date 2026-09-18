@@ -66,6 +66,10 @@
       "title": "Taxa incorreta",
       "message": "Não podemos fornecer uma taxa precisa e esta estimativa pode estar superestimada. Sugerimos que você insira um limite de gás personalizado, mas ainda assim existe o risco de a transação falhar."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "Fundos insuficientes",
       "message": "Você não tem {{nativeCurrency}} suficiente em sua conta para pagar as taxas de rede.",
@@ -1195,6 +1199,11 @@
       "all": "Tudo",
       "trade": "Negociar",
       "just_now": "Agora mesmo",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "aberto",
         "perps_added": "adicionado",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "Tudo",
         "crypto": "Cripto",
+        "memecoin": "Memecoins",
         "pre_ipo": "Pré-IPO",
         "forex": "Forex",
         "new": "Nova",
@@ -4472,7 +4482,7 @@
     "state_logs": "Logs de estado",
     "add_network_title": "Adicionar uma rede",
     "auto_lock": "Bloqueio automático",
-    "enable_device_authentication": "Ativar autenticação de dispositivo",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "Use a biometria ou o código de acesso do seu dispositivo para desbloquear a MetaMask.",
     "auto_lock_desc": "Selecione o tempo para bloquear o aplicativo automaticamente.",
     "state_logs_desc": "Isso ajudará a MetaMask a depurar qualquer problema que você possa encontrar. Envie ao suporte da MetaMask através do ícone de hambúrguer > Enviar comentário ou responda ao seu chamado existente, se for o caso.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "Somente números são permitidos",
       "negative_values_not_allowed": "Valores negativos não são permitidos",
       "max_base_fee_must_be_greater_than_priority_fee": "A taxa-base máxima deve ser maior que a taxa de prioridade",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "A taxa de prioridade deve ser inferior à taxa-base máxima",
       "no_zero_value": "{{field}} deve ser maior que 0",
       "speed": "Velocidade",
@@ -6245,7 +6256,7 @@
       "remember_me": "Lembrar de mim",
       "face_id": "ID de rosto",
       "touch_id": "ID de toque",
-      "device_authentication": "Autenticação de dispositivo",
+      "device_authentication": "Device authentication",
       "device_passcode": "Senha do dispositivo"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "Autorize o cartão MetaMask a usar seu USDC na rede Base para realizar compras.",
         "helper_text": "Isso geralmente leva alguns segundos. Não feche o aplicativo.",
         "confirm_button": "Aprovar financiamento",
-        "retry_button": "Tentar novamente"
+        "retry_button": "Tentar novamente",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "Verificando sua identidade",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "Verificação em andamento",
           "description": "Sua verificação de identidade está em análise. Geralmente isso leva menos de 12 horas."
-        },
-        "pending_verification": {
-          "title": "Conclua a configuração do seu cartão",
-          "description": "Você tem etapas de verificação pendentes que precisam ser concluídas antes que seu cartão possa ser ativado.",
-          "confirm_button_label": "Continuar verificação"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "Acesso total está ativado",
         "unlink_money_account": "Desvincular Money Account",
         "unlink_money_account_description": "Altere sua fonte de fundos do cartão",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Viagem",
         "travel_description": "Reserve hotéis com até 70% de desconto",
         "card_tos_title": "Termos e condições",
@@ -10211,8 +10224,51 @@
         "freeze_success": "Cartão congelado com sucesso",
         "unfreeze_success": "Cartão descongelado com sucesso",
         "change_asset": "Mudar ativo",
-        "change_asset_description": "Selecione um token diferente"
+        "change_asset_description": "Selecione um token diferente",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "Transações",

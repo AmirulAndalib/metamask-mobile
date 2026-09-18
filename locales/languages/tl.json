@@ -66,6 +66,10 @@
       "title": "Hindi tumpak ang bayarin",
       "message": "Hindi kami makapagbigay ng tumpak na bayarin at ang tinantyang bayarin na ito ay maaaring mataas. Iminumungkahi namin sa iyo na ilagay ang naka-custom na limitasyon ng gas, ngunit may panganib na pumalya parin ang transaksyon."
     },
+    "gas_limit_below_minimum": {
+      "title": "Low gas limit",
+      "message": "To continue with this transaction, you'll need to increase the gas limit to 12000 or higher."
+    },
     "insufficient_balance": {
       "title": "Hindi sapat ang pondo",
       "message": "Wala kang sapat na {{nativeCurrency}} sa iyong account para bayaran ang mga bayarin sa network.",
@@ -1195,6 +1199,11 @@
       "all": "Lahat",
       "trade": "Mag-trade",
       "just_now": "Ngayon lang",
+      "age": {
+        "minutes": "{{count}} min ago",
+        "hours": "{{count}} hr ago",
+        "days": "{{count}} d ago"
+      },
       "action": {
         "perps_opened": "nabuksan",
         "perps_added": "naidagdag",
@@ -2778,6 +2787,7 @@
       "tabs": {
         "all": "Lahat",
         "crypto": "Crypto",
+        "memecoin": "Memecoins",
         "pre_ipo": "Pre-IPO",
         "forex": "Forex",
         "new": "Bago",
@@ -4472,7 +4482,7 @@
     "state_logs": "Mga log ng estado",
     "add_network_title": "Magdagdag ng network",
     "auto_lock": "Awtomatikong i-lock",
-    "enable_device_authentication": "Paganahin ang Pag-authenticate sa Device",
+    "enable_device_authentication": "Enable device authentication",
     "enable_device_authentication_desc": "Gamitin ang biometrics o passcode ng device mo para i-unlock ang MetaMask.",
     "auto_lock_desc": "Piliin kung gaano katagal bago awtomatikong mala-lock ang application.",
     "state_logs_desc": "Makakatulong ito sa MetaMask na ma-debug ang anumang isyung kaharapin mo. Pakipadala ito sa suporta sa MetaMask sa pamamagitan ng icon na hamburger > Magpadala ng Feedback, o mag-reply sa kasalukuyan mong ticket kung mayroon.",
@@ -6021,6 +6031,7 @@
       "only_numbers_allowed": "Mga numero lamang ang pinapayagan",
       "negative_values_not_allowed": "Hindi pinapayagan ang mga negatibong halaga",
       "max_base_fee_must_be_greater_than_priority_fee": "Ang pinakamataas na batayang babayaran o base fee ay mas malaki kaysa sa bayad sa priyoridad",
+      "gas_limit_below_minimum": "Gas limit must be at least 12000",
       "priority_fee_too_high": "Ang bayad sa priyoridad ay mas mababa sa pinakamataas na batayang bayad o base fee",
       "no_zero_value": "Ang {{field}} ay dapat na mas malaki kaysa sa 0",
       "speed": "Bilis",
@@ -6245,7 +6256,7 @@
       "remember_me": "Tandaan Ako",
       "face_id": "Face ID",
       "touch_id": "Touch ID",
-      "device_authentication": "Pag-authenticate sa Device",
+      "device_authentication": "Device authentication",
       "device_passcode": "Passcode ng Device"
     }
   },
@@ -9972,7 +9983,12 @@
         "description": "Aprubahan ang MetaMask Card na gamitin ang iyong USDC sa Base para sa mga pagbili.",
         "helper_text": "Karaniwan itong tumatagal nang ilang segundo. Huwag isara ang app.",
         "confirm_button": "Aprubahan ang pagpopondo",
-        "retry_button": "Subukang muli"
+        "retry_button": "Subukang muli",
+        "reapprove": {
+          "title": "Set up card funding",
+          "description": "Approve MetaMask Card to use your USDC on Base again so you can resume spending.",
+          "confirm_button": "Approve funding"
+        }
       },
       "verifying_registration": {
         "title": "Bini-verify ang iyong pagkakakilanlan",
@@ -10148,11 +10164,6 @@
         "kyc_pending": {
           "title": "Kasalukuyan ang pag-verify",
           "description": "Sinusuri ang pag-verify ng pagkakakilanlan mo. Karaniwan itong tumatagal nang wala pang 12 oras."
-        },
-        "pending_verification": {
-          "title": "Tapusin ang pag-set up sa iyong card",
-          "description": "Mayroon kang kukumpletuhing nakabinbin na mga hakbang ng pag-verify bago mapapagana ang iyong card.",
-          "confirm_button_label": "Ipagpatuloy ang pag-verify"
         }
       },
       "messages": {
@@ -10195,6 +10206,8 @@
         "manage_spending_limit_description_full": "Naka-on ang buong pag-access",
         "unlink_money_account": "I-unlink ang Money account",
         "unlink_money_account_description": "Palitan ang pinagmumulan ng pondo ng iyong Card",
+        "unlink_funding_account": "Unlink card",
+        "unlink_funding_account_description": "Prevent future purchases from {{accountName}}",
         "travel_title": "MetaMask Travel",
         "travel_description": "Mag-book ng mga hotel na may hanggang 70% diskuwento",
         "card_tos_title": "Mga tuntunin at kundisyon",
@@ -10211,8 +10224,51 @@
         "freeze_success": "Matagumpay na nai-freeze ang card",
         "unfreeze_success": "Matagumpay na nai-unfreeze ang card",
         "change_asset": "Baguhin ang asset",
-        "change_asset_description": "Pumili ng ibang token"
+        "change_asset_description": "Pumili ng ibang token",
+        "contact_details": "Contact details",
+        "contact_details_description": "Update your email and phone number",
+        "add_to_digital_wallet": "Add to digital wallet",
+        "add_to_digital_wallet_description": "Set up Apple Pay or Google Pay"
       }
+    },
+    "contact_details": {
+      "title": "Contact details",
+      "description": "Keep your email address and phone number up to date.",
+      "email_label": "Email address",
+      "phone_label": "Phone number",
+      "invalid_email": "Enter a valid email address",
+      "invalid_phone": "Enter a valid phone number",
+      "save": "Save",
+      "retry": "Try again",
+      "load_error": "We couldn't load your contact details. Try again.",
+      "update_error": "We couldn't update your contact details. Try again.",
+      "success_message": "Contact details updated"
+    },
+    "digital_wallet_instructions": {
+      "title": "Add card to digital wallet",
+      "description": "Reveal your MetaMask Card details below, then follow these steps to add your card manually.",
+      "apple_wallet": "Apple Wallet",
+      "google_wallet": "Google Wallet",
+      "steps": {
+        "apple": {
+          "open_wallet": "Open Apple Wallet and tap the plus button.",
+          "choose_card": "Select Debit or Credit Card, then choose to enter card details manually.",
+          "enter_details": "Enter your MetaMask Card details and follow the prompts to finish adding your card."
+        },
+        "google": {
+          "open_wallet": "Open Google Wallet and tap Add to Wallet.",
+          "choose_card": "Select Payment card, then choose New credit or debit card.",
+          "enter_details": "Enter your MetaMask Card details manually and follow the prompts to finish adding your card."
+        }
+      }
+    },
+    "revoke_allowance_sheet": {
+      "title": "Unlink card",
+      "description": "You'll no longer be able to make purchases with your card. Relink anytime.",
+      "unlink_button": "Unlink card",
+      "pending_title": "Unlinking {{accountName}}",
+      "success_title": "{{accountName}} was unlinked",
+      "error": "Something went wrong unlinking your account"
     },
     "transactions": {
       "title": "Mga Transaksyon",
